@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const OrderForm = (props) => {
 
-    const { formValues, errors, inputChange, submitForm } = props;
+    const { formValues, errors, inputChange, submitForm, disabled } = props;
 
     const onChange = (evt) => {
         const { name, value, checked, type } = evt.target
@@ -19,6 +19,9 @@ const OrderForm = (props) => {
     return (
         <div>
             <h1>This is the order form</h1>
+            <div className='errors'>
+                <div>{errors.name}</div>
+            </div>
             <form id='pizza-form' onSubmit={onSubmit}>
                 <div className='form-sub-heading'>
                     <h3>Personal Info</h3>
@@ -47,7 +50,7 @@ const OrderForm = (props) => {
                 <div className='form-sub-heading'>
                     <h3>Choose a Size</h3>
                     <label>
-                        <select name='size' value={formValues.size} onChange={onChange}>
+                        <select id='size-dropdown' name='size' value={formValues.size} onChange={onChange}>
                             <option value=''>-- Choose a Size --</option>
                             <option value="Small">Small</option>
                             <option value="Medium">Medium</option>
@@ -201,7 +204,7 @@ const OrderForm = (props) => {
                     </label>
 
                     <Link to='/confirm'>
-                        <button id='order-button' onClick={onSubmit}>Add to Order</button>
+                        <button id='order-button' disabled={disabled} onClick={onSubmit}>Add to Order</button>
                     </Link>
                 </div>
 

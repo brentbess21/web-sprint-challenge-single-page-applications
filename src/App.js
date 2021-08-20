@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Route } from 'react-router-dom';
 import axios from "axios";
 
+import schema from './validation/formSchema';
+import * as yup from 'yup';
+
 //components
 import Home from './components/Home';
 import Header from './components/Header';
@@ -35,11 +38,13 @@ const initialFormValues = {
 const initialErrors = {
   name: '',
   email: '',
+  size:'',
+  sauce: '',
   
 }
 
 const initialOrderItems = [];
-const initialDisabled = false;
+const initialDisabled = true;
 
 const App = () => {
 
@@ -47,6 +52,7 @@ const App = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [errors, setErrors] = useState(initialErrors);
   const [orderItems, setOrderItems] = useState(initialOrderItems);
+  const [disabled, setDisabled] = useState(initialDisabled);
   
   //helper functions
 
@@ -60,8 +66,11 @@ const App = () => {
       })
   }
 
-  const validate = () => {
-
+  const validate = (name, value) => {
+    yup.reach(schema, name)
+      .validate(value)
+      .then( () => setErrors({...errors,[name]: ""}))
+      .catch( err => setErrors({...errors, [name]:err.errors[0]}))
   }
 
   const printOrderItem = (newOrder) => {
@@ -75,6 +84,7 @@ const App = () => {
   }
 
   const inputChange = (name, value) => {
+    validate(name, value);
     setFormValues({...formValues, [name]:value})
   }
 
@@ -98,6 +108,12 @@ const App = () => {
 
   //side effects 
 
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
+
   // useEffect(()=>{
   //   getOderItems();
   // },[])
@@ -112,7 +128,7 @@ const App = () => {
       </Route>
 
       <Route path="/pizza">
-        <OrderForm formValues={formValues} errors={errors} inputChange={inputChange} submitForm={submitForm}/>
+        <OrderForm formValues={formValues} errors={errors} disabled={disabled} inputChange={inputChange} submitForm={submitForm}/>
       </Route>
 
       <Route path='/help'>
