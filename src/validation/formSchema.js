@@ -11,6 +11,10 @@ const formSchema = yup.object().shape({
         .string()
         .trim()
         .required('An email is required'),
+
+    special: yup
+        .string()
+        .trim(),
     
     size: yup
         .string()

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//components
+import Order from './Order';
+
 const OrderForm = (props) => {
 
-    const { formValues, errors, inputChange, submitForm, disabled } = props;
+    const { formValues, errors, inputChange, submitForm, disabled, orderItem } = props;
 
     const onChange = (evt) => {
         const { name, value, checked, type } = evt.target
@@ -207,10 +210,12 @@ const OrderForm = (props) => {
                         <button id='order-button' disabled={disabled} onClick={onSubmit}>Add to Order</button>
                     </Link>
                 </div>
-
-
+                
+                <Order orderItem={orderItem}  />
 
             </form>
+
+        
         </div>
     )
 }

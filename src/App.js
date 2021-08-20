@@ -43,7 +43,7 @@ const initialErrors = {
   
 }
 
-const initialOrderItems = [];
+const initialOrderItem = [];
 const initialDisabled = true;
 
 const App = () => {
@@ -51,7 +51,7 @@ const App = () => {
   //state
   const [formValues, setFormValues] = useState(initialFormValues);
   const [errors, setErrors] = useState(initialErrors);
-  const [orderItems, setOrderItems] = useState(initialOrderItems);
+  const [orderItem, setOrderItem] = useState(initialOrderItem);
   const [disabled, setDisabled] = useState(initialDisabled);
   
   //helper functions
@@ -77,6 +77,7 @@ const App = () => {
     axios.post('https://reqres.in/api/orders', newOrder)
       .then(response => {
         console.log(response);
+        setOrderItem([response.data,...orderItem])
       })
       .catch(err=> {
         console.error(err);
@@ -91,16 +92,15 @@ const App = () => {
   const submitForm = () => {
     const newOrder = {
       name: formValues.name.trim(),
-      email: formValues.email.trim(),
       size: formValues.size.trim(),
-      special: formValues.special.trim(),
-      sauce: formValues.sauce.trim(),
       toppings: ['pepperoni','sausage','chicken','ham','greenPeppers','olives','onions','mushrooms','extraCheese']
-        .filter(topping => !!formValues[topping])
+        .filter(topping => !!formValues[topping]),
+      special: formValues.special.trim(),
     }
     console.log("You submitted the form!")
     console.log(newOrder)
     printOrderItem(newOrder);
+    console.log("This is order item:",orderItem);
     setFormValues(initialFormValues);
   }
 
@@ -128,7 +128,7 @@ const App = () => {
       </Route>
 
       <Route path="/pizza">
-        <OrderForm formValues={formValues} errors={errors} disabled={disabled} inputChange={inputChange} submitForm={submitForm}/>
+        <OrderForm formValues={formValues} errors={errors} disabled={disabled} inputChange={inputChange} submitForm={submitForm} orderItem={orderItem}/>
       </Route>
 
       <Route path='/help'>
@@ -136,7 +136,7 @@ const App = () => {
       </Route>
 
       <Route path='/confirm'>
-        <Confirmation />
+        <Confirmation orderItem={orderItem} />
       </Route>
 
     </>
