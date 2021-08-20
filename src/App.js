@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
       <Header /> 
-      <h1>App Componenet</h1>
+      
       <Route exact path="/">
         <Home />
       </Route>
