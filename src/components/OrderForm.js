@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import '../styles/OrderForm.css'
+
 //components
 import Order from './Order';
 
@@ -21,7 +23,7 @@ const OrderForm = (props) => {
 
     return (
         <div>
-            <h1>This is the order form</h1>
+            <h1>Please Enter Your Order</h1>
             <div className='errors'>
                 <div>{errors.name}</div>
             </div>
@@ -205,17 +207,16 @@ const OrderForm = (props) => {
                             placeholder='List any special instructions here'
                         />
                     </label>
-
-                    <Link to='/confirm'>
-                        <button id='order-button' disabled={disabled} onClick={onSubmit}>Add to Order</button>
-                    </Link>
                 </div>
-                
-                <Order orderItem={orderItem}  />
 
             </form>
 
-        
+            <Link to='/confirm'>
+                        <button id='order-button' disabled={disabled} onClick={onSubmit}>Add to Order</button>
+                    </Link>
+
+            <Order orderItem={orderItem}  />
+
         </div>
     )
 }

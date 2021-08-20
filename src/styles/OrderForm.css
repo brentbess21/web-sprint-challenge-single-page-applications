@@ -1,0 +1,47 @@
+h1{ 
+    color: #7B113A;
+}
+
+
+h3 {
+    font-size: 2rem;
+    background-color: #1C2B2D;
+    text-shadow: 1px 1px #7B113A;
+    color: white;
+    height: 40px;
+    margin: 0 0 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.form-sub-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#pizza-form {
+    border: 2px solid #1C2B2D;
+    width: 80%;
+    margin: 0 auto;
+}
+
+input {
+    margin: 0 10px 30px;
+
+}
+
+select {
+    margin: 0 10px 30px;
+}
+
+label {
+    margin: 0 10px;
+}
+
+#order-button {
+    margin: 0 auto;
+}
+
+
